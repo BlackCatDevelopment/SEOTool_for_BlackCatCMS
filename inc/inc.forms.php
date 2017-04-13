@@ -90,6 +90,8 @@ $FORMS = array(
             'label'       => '301 Redirect',
             'name'        => 'redirect',
             'class'       => 'fc_input_300',
+            'title'       => 'If you need to change the URL shown in the search engine results, you can use this server side 301 redirect.',
+            
         ),
         array(
             'type'        => 'submit',
@@ -148,7 +150,6 @@ $FORMS = array(
             'type'        => 'checkboxgroup',
             'name'        => 'robots[]',
             'label'       => 'META Robots',
-            'title'       => 'Allows to set the META attributes "noindex" and "nofollow"',
             'options'     => array(
                 array('value'=>'noindex','label'=>'no index','title'=>'set to "on" to set "noindex" attribute'),
                 array('value'=>'nofollow','label'=>'no follow','title'=>'set to "on" to set "nofollow" attribute'),

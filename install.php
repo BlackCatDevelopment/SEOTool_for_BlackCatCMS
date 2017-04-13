@@ -39,3 +39,18 @@ if (defined('CAT_PATH')) {
     if (!$inc) trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
 }
 
+	// add files to class_secure
+$addons_helper = new CAT_Helper_Addons();
+foreach(
+	array(
+		'ajax/getfile.php',
+        'ajax/savefile.php',
+        'ajax/update_sitemap.php',
+	)
+	as $file
+) {
+	if ( false === $addons_helper->sec_register_file( 'seotool', $file ) )
+	{
+		 error_log( "Unable to register file -$file-!" );
+	}
+}

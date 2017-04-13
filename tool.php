@@ -103,13 +103,11 @@ if($page_id)
             {
                 if($key == 'robots')
                 {
-echo "robots";
                     $new = array();
                     foreach(array_values($value) as $v)
                     {
                         $new[] = $v;
                     }
-echo "new: ",implode(',',$new);
                     $database->query($sql, array($page_id,'seo',$key,implode(',',$new)));
                 }
             }

@@ -1,0 +1,74 @@
+<?php
+
+/**
+ *   This program is free software; you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation; either version 3 of the License, or (at
+ *   your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful, but
+ *   WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
+ *   General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program; if not, see <http://www.gnu.org/licenses/>.
+ *
+ *   @author          Black Cat Development
+ *   @copyright       2015, Black Cat Development
+ *   @link            http://blackcat-cms.org
+ *   @license         http://www.gnu.org/licenses/gpl.html
+ *   @category        CAT_Core
+ *   @package         seotool
+ *
+ */
+
+if (defined('CAT_PATH')) {
+	include(CAT_PATH.'/framework/class.secure.php');
+} else {
+	$root = "../";
+	$level = 1;
+	while (($level < 10) && (!file_exists($root.'/framework/class.secure.php'))) {
+		$root .= "../";
+		$level += 1;
+	}
+	if (file_exists($root.'/framework/class.secure.php')) {
+		include($root.'/framework/class.secure.php');
+	} else {
+		trigger_error(sprintf("[ <b>%s</b> ] Can't include class.secure.php!", $_SERVER['SCRIPT_NAME']), E_USER_ERROR);
+	}
+}
+
+header('Content-type: application/json');
+
+$backend = CAT_Backend::getInstance('Admintools', 'admintools',false,false);
+$user    = CAT_Users::getInstance();
+
+if(!$user->checkPermission('admintools','admintools',false) === true)
+{
+    echo CAT_Object::json_error("Sorry, but you don't have the permissions for this action");
+    exit;
+}
+
+$name     = CAT_Helper_Validate::sanitizeGet('name');
+if($name != 'robots' && $name != 'htaccess')
+{
+    echo CAT_Object::json_error('Invalid data');
+    exit;
+}
+
+if($name=='robots')   $name .= '.txt';
+if($name=='htaccess') $name = '.'.$name;
+
+if(!file_exists(CAT_PATH.'/'.$name))
+{
+    echo CAT_Object::json_error('No such file');
+    exit;
+}
+
+$handle = @fopen(CAT_PATH.'/'.$name,'r');
+if($handle) {
+    $file   = fread($handle, filesize(CAT_PATH.'/'.$name));
+    fclose($handle);
+    echo CAT_Object::json_success($file);
+}

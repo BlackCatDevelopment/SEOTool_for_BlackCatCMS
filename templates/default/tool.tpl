@@ -3,13 +3,6 @@
             <h2>{translate('SEO Settings for page')} "{$page.menu_title}", ID {$page.page_id}</h2>
             {/if}
             <div style="float:right;margin-top:15px;margin-right:15px;">
-                <form method="get" action="{$CAT_ADMIN_URL}/admintools/tool.php">
-                    {if $page && $page.page_id}{translate('Change page')}{/if}
-                    <input type="hidden" name="tool" id="tool" value="seotool" />
-                    {$page_select}
-                    <input type="submit" name="changepage" id="changepage" value="{translate('Load settings')}" />
-                </form>
-
                 <h2>{translate('Helpful links')}</h2>
                 <ul>
                     <li><a href="https://de.onpage.org/wiki/Canonical_Tag" target="_blank">https://de.onpage.org/wiki/Canonical_Tag</a> (DE)</li>
@@ -20,13 +13,38 @@
                 </ul>
 
                 {if $check}<br />
-                {translate('Please check the following issues')}:
-                <ul>
-                {foreach $check message}
-                    <li> {$message}</li>
-                {/foreach}
-                </ul>{/if}
+                <div id="seotool_check">
+                    {translate('Please check the following issues')}:
+                    <ul>
+                    {foreach $check message}
+                        <li> {$message}</li>
+                    {/foreach}
+                    </ul>
+                </div><br /><br />{/if}
+
+                <button class="submit" id="edit_robots">{translate('Edit robots.txt')}</button><br />
+                <button class="submit" id="edit_htaccess">{translate('Edit .htaccess')}</button><br />
+                <button class="submit" id="update_sitemap">{translate('Update sitemap.xml')}</button><br /><br />
+
+                <img src="{$CAT_URL}/modules/seotool/search-engine-optimization.jpg" alt="Picture by pixabay.com" /><br /><br />
+
+                <span style="font-size:10px">Images by <a href="http://pixabay.com">Pixabay.com</a><br />
+                <a href="https://pixabay.com/de/suchmaschinenoptimierung-seo-google-715759/">search-engine-optimization.jpg by "geralt"</a><br />
+                <a href="https://pixabay.com/de/seo-google-suche-motor-optimierung-896174/">icon.png by "Tumisu"</a>
+                </span>
+
             </div>
+
+            <form method="get" action="{$CAT_ADMIN_URL}/admintools/tool.php" style="float:left;margin-right:15px;">
+                {if $page && $page.page_id}{translate('Change page')}{/if}
+                <input type="hidden" name="tool" id="tool" value="seotool" />
+                {$page_select}
+                <input type="submit" name="changepage" id="changepage" value="{translate('Load settings')}" />
+            </form>
+            <br style="clear:left;" /><br />
+
+            <div id="seotool_inner">
             {if $details_form}{$details_form}{/if}
+            </div>
         </div>
     </div>
