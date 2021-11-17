@@ -139,7 +139,7 @@ if($page_id)
 
     $form->setData($fdata);
     $form->setData($page);
-    $form->getElement('page_id_hidden')->setVal($page_id);
+    $form->getElement('page_id_hidden')->setValue($page_id);
     $tpl_data['details_form'] = $form->getForm();
 
     $check = array();
